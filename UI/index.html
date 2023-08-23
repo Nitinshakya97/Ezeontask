@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <script>
+        // function getFormData($form) {
+        //     var unindexed_array = $form.serializeArray();
+        //     var indexed_array = {};
+
+        //     $.map(unindexed_array, function (n, i) {
+        //         indexed_array[n['name']] = n['value'];
+        //     });
+
+        //     return indexed_array;
+        // }
+        $(document).ready(function () {
+            $.get("http://localhost:8080/user/show", function (data) {
+                console.log(data);
+                let str = "";
+                for (let i = 0; i < data.length; i++) {
+                    str += "<tr>"
+                    str += "<td>" + data[i].id + "</td>";
+                    str += "<td>" + data[i].subject + "</td>";
+                    str += "<td>" + data[i].descrption + "</td>";
+                    str += "<td>" + data[i].priority + "</td>";
+                    str += "<td>" + data[i].status + "</td>";
+                    str += "<td>" + data[i].date_time + "</td>";
+                    str += "</tr>"
+                }
+                $('#ab tbody').html(str);
+            });
+            $('#sub').click(function () {
+                let formdata = JSON.stringify($('#myform').serializeArray()); //JSON.stringify to convert javascript value to json
+                var $form = $("#myform");
+                var fdata = getFormData($form);
+                console.log(fdata);
+                $.ajax({
+                    method: "POST",
+                    url: 'http://localhost:8080//user/save',
+                    data: fdata,
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    // dataType: "json",
+                    contentType: 'application/json;charset=UTF-8',
+
+                })
+            });
+            // alert("saved!!")
+
+            $('#del').click(function () {
+                let formdata = $('#delete').serialize();
+                console.log(formdata);
+                $.ajax({
+                    type: "DELETE",
+                    url: 'http://localhost:8080/user/delete',
+                    data: formdata,
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    // dataType: "JSON",
+                })
+            })
+
+
+            $('#upd').click(function () {
+                let fordata = $('#update').serialize();
+                $.ajax({
+                    type: "post",
+                    url: 'http://localhost:8080/user/update',
+                    data: formdata,
+                    success: function (data) {
+                        console.log(data);
+                    },
+                })
+            })
+
+            $('#ser').click(function () {
+                let formdata = $('#search').serialize();
+                $.ajax({
+                    type: 'get',
+                    url: 'http://localhost:8080/user/search',
+                    data: formdata,
+                    success: function (data) {
+                        console.log(data);
+                    }
+                })
+            })
+        });
+    </script>
+    <table id="ab" class="display" border="2">
+
+        <tbody>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Subject</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Date and Time</th>
+
+                </tr>
+            </thead>
+
+
+        </tbody>
+    </table>
+    </script>
+    <hr>
+    SAVE DATA <br>
+
+    <form id="myform">
+        <label for="">Subject:</label>
+        <input type="text" class="Subject" name="subject" placeholder="Subject" id="subject">
+
+        <br>
+        <label for="">Status</label>
+        <input type="text" class="status" name="status" placeholder="New/In Progress/Completed" id="status">
+        <br>
+        <label for="">Description:</label>
+        <input type="text" class="description" name="description" placeholder="Description" id="description"> <br>
+
+        <label for="">Priority:</label>
+        <input type="text" class="priority" name="priority" placeholder="Low/High" id="priority"> <br>
+
+        <label for="">Date and Time:</label>
+        <input type="text" class="text" name="date" placeholder="Date and time" id="date"> <br>
+
+
+        <button class="button" type="button" id="sub">Submit</button>
+        <hr>
+    </form>
+
+    DELETE DATA <br> <br>
+    <form id="delete">
+        <label for="">ID:</label>
+        <input type="text" class="id" name="id" placeholder="Enter id" id="id"> <br>
+
+        <button class="button" type="button" id="del">Submit</button>
+
+    </form>
+    <hr>
+    <br> SEARCH DATA <br>
+    <form id="search">
+        <label for="">ID:</label>
+        <input type="text" class="id" name="id" placeholder="Enter id" id="id"> <br>
+
+        <button class="button" type="button" id="ser">Submit</button>
+
+    </form>
+    <hr>
+    <br> UPDATE DATA <br>
+    <form id="update">
+        <label for="">ID:</label>
+        <input type="text" class="id" name="id" placeholder="Enter id" id="id"> <br>
+        <br>
+        <label for="">Status</label>
+        <input type="text" class="status" name="status" placeholder="New/In Progress/Completed" id="status">
+        <br>
+        <label for="">Subject</label>
+        <input type="text" class="subject" name="subject" placeholder="Subject" id="subject">
+        <br>
+        <label for="">Description:</label>
+        <input type="text" class="description" name="description" placeholder="Description" id="description"> <br>
+
+        <label for="">Priority:</label>
+        <input type="text" class="priority" name="priority" placeholder="Low/High" id="priority"> <br>
+
+        <label for="">Date and Time:</label>
+        <input type="text" class="email" name="email" placeholder="Date and time" id="date"> <br>
+
+        <button class="button" type="button" id="upd">Submit</button>
+
+    </form>
+    <hr>
+    <br>SEARCH BY TASK COMPLETED<br>
+    <form id="complete">
+        <button class="button" type="button" id="com">Submit</button>
+
+        <hr>
+        <br> SEARCH BY PENDING TASK<br>
+    </form id="pending">
+    <button class="button" type="button" id="pen">Submit</button>
+
+    </form>
+    <hr>
+    <br>SEARCH BY LOW PRIORITY<br>
+    <form id="low">
+        <button class="button" type="button" id="lowp">Submit</button>
+
+    </form>
+    <HR>
+    <br>SEARCH BY HIGH PRIORITY<br>
+    <form id="high">
+        <button class="button" type="button" id="highp">Submit</button>
+
+    </form>
+</body>
+
+</html>
