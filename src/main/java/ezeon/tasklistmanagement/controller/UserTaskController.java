@@ -35,8 +35,8 @@ public class UserTaskController {
      @PostMapping(path = "/save")        //to save the new data in database 
     public Boolean userAdd(@RequestBody UserTaskModel um) {
         System.out.println(um);
-     //userModel un=new userModel(email, email, email, email, 0, 0);
-        urepo.save(um);
+     UserTaskModel un=new UserTaskModel(um.getSubject(), um.getDescrption(), um.getPriority(),um.getStatus(), um.getDate_time());
+        urepo.save(un);
         return true;
     }
 

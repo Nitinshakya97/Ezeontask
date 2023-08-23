@@ -37,31 +37,67 @@
                 }
                 $('#ab tbody').html(str);
             });
+
             $('#sub').click(function () {
-                // let formdata = JSON.stringify($('#myform').serializeArray()); //JSON.stringify to convert javascript value to json
+              // let formdata = JSON.stringify($('#myform').serializeArray()); //JSON.stringify to convert javascript value to json
                 let formdata = ($('#myform').serialize()); //convert form data to url incode
-                // var $form = $("#myform");
-                // var fdata = getFormData($form);
-                console.log(formdata);
+                console.log(formdata);       
                 $.ajax({
+                    
                     method: "POST",
-                    url: 'http://localhost:8080//user/save',
+                    url: 'http://localhost:8080/user/save',
                     data: JSON.stringify({
                          "subject":$("#subject").val(),
-                         "descrption":("#descrption").val(),
-                         "pririty":("#priority").val(),
-                         "status":("#status").val(),
-                         "datetime":("#date").val()
+                         "descrption":$("#descrption").val(),
+                         "priority":$("#priority").val(),
+                         "status":$("#status").val(),
+                         "datetime":$("#date").val()
                         }),
                         dataType: "json",
                         contentType: 'application/json;charset=UTF-8',
                     success: function (data) {
+                       
                         console.log(data);
+                        alert("saved!!")
                     },
 
                 })
             });
-            // alert("saved!!")
+
+
+
+
+
+            $('#upd').click(function () {
+              
+                let formdata = ($('#update').serialize()); //convert form data to url incode
+                console.log(formdata);       
+                $.ajax({
+                    
+                    method: "POST",
+                    url: 'http://localhost:8080/user/update',
+                    data: JSON.stringify({
+                         "id":$("#id").val(),
+                         "subject":$("#subject").val(),
+                         "descrption":$("#descrption").val(),
+                         "pririty":$("#priority").val(),
+                         "status":$("#status").val(),
+                         "datetime":$("#date").val(),
+                        }),
+                        dataType: "json",
+                        contentType: 'application/json;charset=UTF-8',
+                    success: function (data) {
+                       
+                        console.log(data);
+                        
+                    },
+
+                })
+            });
+
+
+
+
 
             $('#del').click(function () {
                 let formdata = $('#delete').serialize();
@@ -73,13 +109,15 @@
                     success: function (data) {
                         console.log(data);
                     },
-                    // dataType: "JSON",
+                    dataType: "JSON",
+                    contentType: 'application/json;charset=UTF-8',
+
                 })
             })
 
 
             $('#upd').click(function () {
-                let fordata = $('#update').serialize();
+                let formdata = $('#update').serialize();
                 $.ajax({
                     type: "post",
                     url: 'http://localhost:8080/user/update',
@@ -177,7 +215,7 @@
         <input type="text" class="subject" name="subject" placeholder="Subject" id="subject">
         <br>
         <label for="">Description:</label>
-        <input type="text" class="description" name="description" placeholder="Description" id="description"> <br>
+        <input type="text" class="description" name="description" placeholder="Description" id="descrption"> <br>
 
         <label for="">Priority:</label>
         <input type="text" class="priority" name="priority" placeholder="Low/High" id="priority"> <br>
