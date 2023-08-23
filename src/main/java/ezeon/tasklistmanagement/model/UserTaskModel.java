@@ -1,5 +1,9 @@
 package ezeon.tasklistmanagement.model;
 
+// import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.sql.Date;
 
 import jakarta.persistence.Entity;
@@ -16,7 +20,8 @@ public class UserTaskModel {
     private String descrption;
     private String priority;
     private String status;
-    private Date date_time;
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    private Date datetime;
 
 
     public UserTaskModel() {
@@ -29,7 +34,7 @@ public class UserTaskModel {
         this.descrption = descrption;
         this.priority = priority;
         this.status = status;
-        this.date_time = date_time;
+        this.datetime = date_time;
     }
 
 
@@ -84,12 +89,12 @@ public class UserTaskModel {
 
 
     public Date getDate_time() {
-        return date_time;
+        return datetime;
     }
 
 
     public void setDate_time(Date date_time) {
-        this.date_time = date_time;
+        this.datetime = date_time;
     }
 
     

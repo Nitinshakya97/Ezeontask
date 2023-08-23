@@ -38,19 +38,26 @@
                 $('#ab tbody').html(str);
             });
             $('#sub').click(function () {
-                let formdata = JSON.stringify($('#myform').serializeArray()); //JSON.stringify to convert javascript value to json
-                var $form = $("#myform");
-                var fdata = getFormData($form);
-                console.log(fdata);
+                // let formdata = JSON.stringify($('#myform').serializeArray()); //JSON.stringify to convert javascript value to json
+                let formdata = ($('#myform').serialize()); //convert form data to url incode
+                // var $form = $("#myform");
+                // var fdata = getFormData($form);
+                console.log(formdata);
                 $.ajax({
                     method: "POST",
                     url: 'http://localhost:8080//user/save',
-                    data: fdata,
+                    data: JSON.stringify({
+                         "subject":$("#subject").val(),
+                         "descrption":("#descrption").val(),
+                         "pririty":("#priority").val(),
+                         "status":("#status").val(),
+                         "datetime":("#date").val()
+                        }),
+                        dataType: "json",
+                        contentType: 'application/json;charset=UTF-8',
                     success: function (data) {
                         console.log(data);
                     },
-                    // dataType: "json",
-                    contentType: 'application/json;charset=UTF-8',
 
                 })
             });
@@ -127,7 +134,7 @@
         <input type="text" class="status" name="status" placeholder="New/In Progress/Completed" id="status">
         <br>
         <label for="">Description:</label>
-        <input type="text" class="description" name="description" placeholder="Description" id="description"> <br>
+        <input type="text" class="description" name="description" placeholder="Description" id="descrption"> <br>
 
         <label for="">Priority:</label>
         <input type="text" class="priority" name="priority" placeholder="Low/High" id="priority"> <br>

@@ -1,5 +1,7 @@
 package ezeon.tasklistmanagement.controller;
 
+// import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +36,7 @@ public class UserTaskController {
     public Boolean userAdd(@RequestBody UserTaskModel um) {
         System.out.println(um);
      //userModel un=new userModel(email, email, email, email, 0, 0);
-        // urepo.save(um);
+        urepo.save(um);
         return true;
     }
 
@@ -65,28 +67,28 @@ public class UserTaskController {
 
 
 
-    // @GetMapping(value = "/searchbyStatus{status}") //search data from database by status
-    // public List<UserTaskModel> searchByStatus(@RequestBody UserTaskModel um) {
-    //     List<UserTaskModel> data = urepo.findByStatus(um.getStatus());
-    //     System.out.println(data);
-    //     return data;
+    @GetMapping(value = "/searchbyStatus/{status}") //search data from database by status
+    public List<UserTaskModel> searchByStatus(@PathVariable String status) {
+        List<UserTaskModel> data = urepo.findByStatus(status);
+        System.out.println(data);
+        return data;
         
-    // }
+    }
     
-    // @GetMapping(value = "/searchbypriority/{priority}") //search data from database by status
-    // public List<UserTaskModel> searchByPriority(@RequestBody UserTaskModel um) {
-    //     List<UserTaskModel> data = urepo.findByPriority(um.getPriority());
-    //     return data;
-    //     // return urepo.findAll(priority);
-    //     // return true;
-    // }
+    @GetMapping(value = "/searchbypriority/{priority}") //search data from database by status
+    public List<UserTaskModel> searchByPriority(@PathVariable String priority) {
+        List<UserTaskModel> data = urepo.findByPriority(priority);
+        return data;
+        // return urepo.findAll(priority);
+        // return true;
+    }
     
-    // @GetMapping(value = "/search/{date_time}") //search data from database by status
-    // public List<UserTaskModel> searchByDate(@RequestBody UserTaskModel um) {
-    //     List<UserTaskModel> data = urepo.findByDate_Time(um.getDate_time());
+    // @GetMapping(value = "/searchBydate/{date_time}") //search data from database by status
+    // public List<UserTaskModel> searchByDate(@PathVariable Date date_time) {
+    //     List<UserTaskModel> data = urepo.findByDateTime(date_time);
     //     return data;
         // return urepo.findAll(date_time);
-        // return true;
+        
     // }
 
 }
